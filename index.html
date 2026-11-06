@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kiosco Dulce</title>
+<style>
+  :root { --bg:#050a05; --fg:#33ff66; --dim:#1c9940; --line:#145c2a; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font-family:"Courier New",monospace; line-height:1.55; padding:24px 16px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  h1 { font-size:1.5rem; letter-spacing:2px; margin:0 0 4px; text-shadow:0 0 8px var(--fg); }
+  .sub { color:var(--dim); margin-bottom:24px; }
+  .box { border:1px solid var(--line); padding:16px; margin-bottom:20px; background:rgba(51,255,102,.03); }
+  .box h2 { margin:0 0 10px; font-size:1.05rem; }
+  table { width:100%; border-collapse:collapse; }
+  th, td { text-align:left; padding:6px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--dim); font-weight:normal; }
+  .old { color:var(--dim); text-decoration:line-through; }
+  .na { color:var(--dim); }
+  pre { white-space:pre-wrap; margin:0; font-family:inherit; }
+  .discord { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+  .user { border:1px dashed var(--fg); padding:6px 12px; }
+  a.btn { display:inline-block; text-decoration:none; background:transparent; color:var(--fg); border:1px solid var(--fg); font-family:inherit; padding:7px 14px; }
+  a.btn:hover { background:var(--fg); color:var(--bg); }
+  button { background:transparent; color:var(--fg); border:1px solid var(--fg); font-family:inherit; padding:7px 14px; cursor:pointer; }
+  button:hover { background:var(--fg); color:var(--bg); }
+  .blink { animation:b 1s steps(2) infinite; } @keyframes b { 50% { opacity:0; } }
+  footer { color:var(--dim); font-size:.85rem; text-align:center; margin-top:28px; }
+</style>
+</head>
+<body>
+<!-- 
+  ======================================================
+  [ SISTEMA DE ADMINISTRACIÓN DE STOCK - KIOSCO DULCE ]
+  Última modificación: Justo antes del recreo.
+  Desarrollador asignado: J.R. (Fosforito)
+  Nota OpSec: Borrar el historial de la PC de la biblioteca 
+  después de actualizar la base de datos de Discord.
+  ======================================================
+-->
+<div class="wrap">
+  <h1>&gt; KIOSCO DULCE<span class="blink">_</span></h1>
+  <div class="sub">Golosinas para el recreo. Pedidos por Discord.</div>
+
+  <div class="box">
+    <pre>Veo que entraste. Te llamó la atención nuestro cartel para
+acceder a las golosinas. Leé las cláusulas antes de pedir.</pre>
+  </div>
+
+  <div class="box">
+    <h2>[ CLÁUSULAS DE RETIRO ]</h2>
+<pre>====================================================
+      POLÍTICA DE RETIROS DEL KIOSCO
+====================================================
+
+Si otra persona levanta tu pedido antes que vos,
+NO HAY DEVOLUCIÓN DE DINERO NI REPOSICIÓN.
+
+Tu parte como comprador:
+1. Confirmar tu pedido por Discord antes del recreo.
+2. Pasar a retirarlo a la hora acordada.
+3. Retirarlo dentro de la ventana de 20 minutos.
+
+Si te colgás con el reloj, el pedido se libera y
+pasa a otro cliente. El combo solo queda reservado
+durante esa ventana.
+====================================================</pre>
+  </div>
+
+  <div class="box">
+    <h2>[ LISTA DE PRECIOS ]</h2>
+    <table>
+      <tr><th>Artículo</th><th>Precio</th></tr>
+      <tr><td>Gomitas</td><td>6$</td></tr>
+      <tr><td>Caramelos</td><td>1$</td></tr>
+      <tr><td>Chupetines</td><td>4$</td></tr>
+      <tr><td>Chicles</td><td>2$</td></tr>
+      <tr><td>Pacoquitas</td><td>6$</td></tr>
+      <tr><td>Pack 1</td><td>52$</td></tr>
+      <tr><td>Pack 2</td><td>52$</td></tr>
+      <tr><td>Pack 3</td><td>32$</td></tr>
+    </table>
+  </div>
+
+  <div class="box">
+    <h2>[ HACER UN PEDIDO ]</h2>
+    <p>Escribime por Discord con tu pedido y el recreo en el que lo retirás:</p>
+    <div class="discord">
+      <a id="dm" class="btn" href="#" target="_blank" rel="noopener">Abrir chat en Discord</a>
+      <button onclick="copiar()" id="b" style="display:none">Copiar usuario</button>
+      <span class="user" id="u" style="display:none">coolkid018531</span>
+    </div>
+  </div>
+
+  <footer>&copy; Kiosco Dulce &mdash; solo golosinas</footer>
+</div>
+<script>
+  // Pegá acá el ID numérico de tu perfil de Discord (ver instrucciones)
+  var DISCORD_ID = "";
+  (function(){
+    var dm = document.getElementById('dm');
+    if (DISCORD_ID) {
+      dm.href = "https://discord.com/users/" + DISCORD_ID;
+    } else {
+      // Sin ID todavía: se muestra el usuario con botón para copiarlo
+      dm.style.display = 'none';
+      document.getElementById('u').style.display = '';
+      document.getElementById('b').style.display = '';
+    }
+  })();
+  function copiar() {
+    var t = document.getElementById('u').textContent;
+    var b = document.getElementById('b');
+    var ok = function(){ b.textContent = 'Copiado'; setTimeout(function(){ b.textContent = 'Copiar usuario'; }, 1500); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(t).then(ok); }
+    else { var r = document.createRange(); r.selectNode(document.getElementById('u')); getSelection().removeAllRanges(); getSelection().addRange(r); document.execCommand('copy'); ok(); }
+  }
+</script>
+</body>
+</html>
